@@ -13,33 +13,21 @@ COMMENT ON TYPE pgcv_core.ndarray_int4 IS 'N-dimensional array of int4 elements.
 
 -- =============================================
 -- Author:      Roberto Mora
--- Description: N-dimentional array of numeric elements
+-- Description: Region properties of an object found in a binary image
 -- =============================================
-CREATE TYPE pgcv_core.ndarray_numeric AS (
-  shape   int[],
-  data    numeric[]
+CREATE TYPE pgcv_core.regionprops AS (
+  label         int,
+  area          int,
+  perimeter     float,
+  centroid      float[2],
+  solidity      float,
+  eccentricity  float,
+  convex_area   int,
+  circularity   float,
+  orientation   float,
+  bbox          int[4]
 );
-COMMENT ON TYPE pgcv_core.ndarray_numeric IS 'N-dimensional array of numeric elements. Generally used to store feature arrays whose domain is decimal.';
-
--- =============================================
--- Author:      Roberto Mora
--- Description: N-dimentional array of varchar elements
--- =============================================
-CREATE TYPE pgcv_core.ndarray_varchar AS (
-  shape   int[],
-  data    varchar[]
-);
-COMMENT ON TYPE pgcv_core.ndarray_varchar IS 'N-dimensional array of varchar elements';
-
--- =============================================
--- Author:      Roberto Mora
--- Description: Array used to describe the columns of a two dimentional array (matrix) or a set of one dimentional array (vector)
--- =============================================
-CREATE TYPE pgcv_core.descriptor AS (
-  elems   int,
-  data    varchar[]
-);
-COMMENT ON TYPE pgcv_core.descriptor IS 'Array used to describe the columns of a two dimentional array (matrix) or a set of one dimentional array (vector).';
+COMMENT ON TYPE pgcv_core.regionprops IS 'Region properties of an object found in a binary image.';
 
 -- =============================================
 -- Author:      Roberto Mora
@@ -93,4 +81,4 @@ COMMENT ON FUNCTION pgcv_core.hash_avg(pgcv_core.ndarray_int4, int) IS 'Calculat
 -- =============================================
 -- These queries test the core functions
 -- =============================================
--- SELECT pgcv_core.hash_avg(pgcv_io.image_read('/Users/ro/U/[ Asistencia ] - Proyecto de Investigacion/Source_Images/mdb155.pgm'));
+-- SELECT * FROM pgcv_core.hash_avg(pgcv_io.image_read('/Users/ro/U/[ Asistencia ] - Proyecto de Investigacion/Source_Images/mdb155.pgm'));
