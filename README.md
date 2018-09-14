@@ -6,7 +6,7 @@
 `pgcv` is a PostgreSQL extension for Computer Vision from the database server. It aims to be an extension that implements several image manipulation algorithms to store and manipulate images from the database server.
 
 ## Documentation
-There will be two kinds of documentation available for `pgcv`. The first one is the API documentation for the PostgreSQL functions. This documentation will be created once the extension has a stable API (version 1.0).
+There will be two kinds of documentation available for `pgcv`. The first one is the documentation for the PostgreSQL functions. This documentation will be created once the extension has a stable API (version 1.0).
 
 The other kind of documentation will be a blog-like explanation of how I created this extension, you can find it under the **notebooks** folder of this repository. The later information is presented in the form of Jupyter notebooks.
 
