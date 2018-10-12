@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML"
+        crossorigin="anonymous">
+    <style>
+        /*--------------------------------------------------------------------------------------------- * Copyright (c) Microsoft Corporation. All rights reserved. * Licensed under the MIT License. See License.txt in the project root for license information. *--------------------------------------------------------------------------------------------*/
+        body {
+            font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+            font-size: 14px;
+            padding: 0 26px;
+            line-height: 22px;
+            word-wrap: break-word;
+
+            width: 40%;
+            margin-left: 30%;
+        }
+
+        #code-csp-warning {
+            position: fixed;
+            top: 0;
+            right: 0;
+            color: white;
+            margin: 16px;
+            text-align: center;
+            font-size: 12px;
+            font-family: sans-serif;
+            background-color: #444444;
+            cursor: pointer;
+            padding: 6px;
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, .25);
+        }
+
+        #code-csp-warning:hover {
+            text-decoration: none;
+            background-color: #007acc;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, .25);
+        }
+
+        body.scrollBeyondLastLine {
+            margin-bottom: calc(100vh - 22px);
+        }
+
+        body.showEditorSelection .code-line {
+            position: relative;
+        }
+
+        body.showEditorSelection .code-active-line:before,
+        body.showEditorSelection .code-line:hover:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: -12px;
+            height: 100%;
+        }
+
+        body.showEditorSelection li.code-active-line:before,
+        body.showEditorSelection li.code-line:hover:before {
+            left: -30px;
+        }
+
+        .vscode-light.showEditorSelection .code-active-line:before {
+            border-left: 3px solid rgba(0, 0, 0, 0.15);
+        }
+
+        .vscode-light.showEditorSelection .code-line:hover:before {
+            border-left: 3px solid rgba(0, 0, 0, 0.40);
+        }
+
+        .vscode-light.showEditorSelection .code-line .code-line:hover:before {
+            border-left: none;
+        }
+
+        .vscode-dark.showEditorSelection .code-active-line:before {
+            border-left: 3px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .vscode-dark.showEditorSelection .code-line:hover:before {
+            border-left: 3px solid rgba(255, 255, 255, 0.60);
+        }
+
+        .vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+            border-left: none;
+        }
+
+        .vscode-high-contrast.showEditorSelection .code-active-line:before {
+            border-left: 3px solid rgba(255, 160, 0, 0.7);
+        }
+
+        .vscode-high-contrast.showEditorSelection .code-line:hover:before {
+            border-left: 3px solid rgba(255, 160, 0, 1);
+        }
+
+        .vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+            border-left: none;
+        }
+
+        img {
+            max-width: 50%;
+            max-height: 50%;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 1px solid -webkit-focus-ring-color;
+            outline-offset: -1px;
+        }
+
+        hr {
+            border: 0;
+            height: 2px;
+            border-bottom: 2px solid;
+        }
+
+        h1 {
+            padding-bottom: 0.3em;
+            line-height: 1.2;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-weight: normal;
+        }
+
+        h1 code,
+        h2 code,
+        h3 code,
+        h4 code,
+        h5 code,
+        h6 code {
+            font-size: inherit;
+            line-height: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table>thead>tr>th {
+            text-align: left;
+            border-bottom: 1px solid;
+        }
+
+        table>thead>tr>th,
+        table>thead>tr>td,
+        table>tbody>tr>th,
+        table>tbody>tr>td {
+            padding: 5px 10px;
+        }
+
+        table>tbody>tr+tr>td {
+            border-top: 1px solid;
+        }
+
+        blockquote {
+            margin: 0 7px 0 5px;
+            padding: 0 16px 0 10px;
+            border-left-width: 5px;
+            border-left-style: solid;
+        }
+
+        code {
+            font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+            font-size: 14px;
+            line-height: 19px;
+            background: #EEE;
+            padding: 1px 4px;
+            border-radius: 2px;
+            color: #cc3300;
+        }
+
+        body.wordWrap pre {
+            white-space: pre-wrap;
+        }
+
+        .mac code {
+            font-size: 12px;
+            line-height: 18px;
+        }
+
+        pre:not(.hljs),
+        pre.hljs code>div {
+            padding: 16px;
+            border-radius: 3px;
+            overflow: auto;
+        }
+
+        /** Theming */
+        pre code {
+            color: var(--vscode-editor-foreground);
+        }
+
+        .vscode-light pre:not(.hljs),
+        .vscode-light code>div {
+            background-color: rgba(220, 220, 220, 0.4);
+        }
+
+        .vscode-dark pre:not(.hljs),
+        .vscode-dark code>div {
+            background-color: rgba(10, 10, 10, 0.4);
+        }
+
+        .vscode-high-contrast pre:not(.hljs),
+        .vscode-high-contrast code>div {
+            background-color: rgb(0, 0, 0);
+        }
+
+        .vscode-high-contrast h1 {
+            border-color: rgb(0, 0, 0);
+        }
+
+        .vscode-light table>thead>tr>th {
+            border-color: rgba(0, 0, 0, 0.69);
+        }
+
+        .vscode-dark table>thead>tr>th {
+            border-color: rgba(255, 255, 255, 0.69);
+        }
+
+        .vscode-light h1,
+        .vscode-light hr,
+        .vscode-light table>tbody>tr+tr>td {
+            border-color: rgba(0, 0, 0, 0.18);
+        }
+
+        .vscode-dark h1,
+        .vscode-dark hr,
+        .vscode-dark table>tbody>tr+tr>td {
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+    </style>
+    <style>
+        /* Tomorrow Theme */
+        /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+        /* Original theme - https://github.com/chriskempson/tomorrow-theme */
+        /* Tomorrow Comment */
+        .hljs-comment,
+        .hljs-quote {
+            color: #8e908c;
+        }
+
+        /* Tomorrow Red */
+        .hljs-variable,
+        .hljs-template-variable,
+        .hljs-tag,
+        .hljs-name,
+        .hljs-selector-id,
+        .hljs-selector-class,
+        .hljs-regexp,
+        .hljs-deletion {
+            color: #c82829;
+        }
+
+        /* Tomorrow Orange */
+        .hljs-number,
+        .hljs-built_in,
+        .hljs-builtin-name,
+        .hljs-literal,
+        .hljs-type,
+        .hljs-params,
+        .hljs-meta,
+        .hljs-link {
+            color: #f5871f;
+        }
+
+        /* Tomorrow Yellow */
+        .hljs-attribute {
+            color: #eab700;
+        }
+
+        /* Tomorrow Green */
+        .hljs-string,
+        .hljs-symbol,
+        .hljs-bullet,
+        .hljs-addition {
+            color: #718c00;
+        }
+
+        /* Tomorrow Blue */
+        .hljs-title,
+        .hljs-section {
+            color: #4271ae;
+        }
+
+        /* Tomorrow Purple */
+        .hljs-keyword,
+        .hljs-selector-tag {
+            color: #8959a8;
+        }
+
+        .hljs {
+            display: block;
+            overflow-x: auto;
+            color: #4d4d4c;
+            padding: 0.5em;
+        }
+
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+        .hljs-strong {
+            font-weight: bold;
+        }
+    </style>
+    <style>
+        .task-list-item {
+            list-style-type: none;
+        }
+
+        .task-list-item-checkbox {
+            margin-left: -20px;
+            vertical-align: middle;
+        }
+    </style>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="pgcv---computer-vision-objects-for-postgresql">pgcv - Computer Vision Objects for PostgreSQL</h1>
+    <p><code>pgcv</code> is a PostgreSQL extension for Computer Vision from the database server. The extension
+        implements algorithms for image segmentation, in particular: digital mammogram segmentation.</p>
+    <p>The extension implements both data types and functions. The data types are PostgreSQL composite types and the
+        functions were created using PL/Python, meaning the function's body is written in Python.</p>
+    <ul>
+        <li><a href="#pgcv---computer-vision-objects-for-postgresql">pgcv - Computer Vision Objects for PostgreSQL</a>
+            <ul>
+                <li><a href="#requirements">Requirements</a></li>
+                <li><a href="#structure">Structure</a>
+                    <ul>
+                        <li><a href="#data-types">Data Types</a></li>
+                        <li><a href="#function-modules">Function Modules</a>
+                            <ul>
+                                <li><a href="#pgcv_io">pgcv_io</a>
+                                    <ul>
+                                        <li><a href="#image_read"><code>image_read</code></a></li>
+                                        <li><a href="#image_write"><code>image_write</code></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#pgcv_filter">pgcv_filter</a>
+                                    <ul>
+                                        <li><a href="#blur_median"><code>blur_median</code></a></li>
+                                        <li><a href="#threshold_otsu"><code>threshold_otsu</code></a></li>
+                                        <li><a href="#enhancement_otsu"><code>enhancement_otsu</code></a></li>
+                                        <li><a href="#binarize"><code>binarize</code></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#pgcv_histogram">pgcv_histogram</a>
+                                    <ul>
+                                        <li><a href="#hist_bin_edges"><code>hist_bin_edges</code></a></li>
+                                        <li><a href="#hist_bin_centers"><code>hist_bin_centers</code></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#pgcv_measure">pgcv_measure</a>
+                                    <ul>
+                                        <li><a href="#region_props_json"><code>region_props_json</code></a></li>
+                                        <li><a href="#region_props"><code>region_props</code></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#pgcv_bundle">pgcv_bundle</a>
+                                    <ul>
+                                        <li><a href="#mam_region_props"><code>mam_region_props</code></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#example">Example</a>
+                    <ul>
+                        <li><a href="#image-segmentation">Image Segmentation</a></li>
+                        <li><a href="#object-extraction">Object Extraction</a></li>
+                    </ul>
+                </li>
+                <li><a href="#appendix-a---source-code">Appendix A - Source Code</a>
+                    <ul>
+                        <li><a href="#pgcv_core-source-code">pgcv_core source code</a></li>
+                        <li><a href="#pgcv_io-source-code">pgcv_io source code</a></li>
+                        <li><a href="#pgcv_filter-source-code">pgcv_filter source code</a></li>
+                        <li><a href="#pgcv_histogram-source-code">pgcv_histogram source code</a></li>
+                        <li><a href="#pgcv_measure-source-code">pgcv_measure source code</a></li>
+                        <li><a href="#pgcv_bundle-source-code">pgcv_bundle source code</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <h2 id="requirements">Requirements</h2>
+    <p>This extension requires the following:</p>
+    <ul>
+        <li>PostgreSQL (version 10 recommended)</li>
+        <li>Python3</li>
+        <li>The following Python packages
+            <ul>
+                <li>Numpy</li>
+                <li>Scipy</li>
+                <li>scikit-image</li>
+                <li>Pillow</li>
+                <li>Pandas</li>
+            </ul>
+        </li>
+        <li><code>plpython3u</code> installed in the PostgreSQL database</li>
+    </ul>
+    <p>The mentioned Python packages can be installed by executing the following command on your terminal:</p>
+    <pre class="hljs"><code><div>pip3 install numpy scipy scikit-image pandas Pillow
+</div></code></pre>
+    <h2 id="structure">Structure</h2>
+    <p>The extension was structured into SQL-schemas because it allows the possibility to modularize the functions and
+        group them into logical packages.</p>
+    <p>There are 7 schemas in the extension. <code>pgcv_core</code> defines the datatypes and the rest of the schemas
+        define the functions that operate over theese datatypes.</p>
+    <p>The following diagram shows the dependency structure of these schemas:</p>
+    <div style="text-align:center"><img src="./schemas.png" /></div>
+    <h3 id="data-types">Data Types</h3>
+    <p>There are two datatypes in the <code>pgcv_core</code>: <code>ndarray_int4</code> and <code>pegionprops</code>,
+        as shown in the figure bellow:</p>
+    <div style="text-align:center"><img src="./datatypes.png" /></div>
+    <ol>
+        <li><code>pgcv_core.ndarray_int4</code>: N-dimensional array of int4 elements. Used to represent and store
+            images. The shape is a tuple of N integers (one for each dimension) that provides information on how far
+            the index can vary along that dimension. The data is a buffer which contains a flattened representation of
+            the multidimensional array's data</li>
+        <li><code>pgcv_core.regionprops</code>: Region properties of an object found in a binary image. The properties
+            contained in this type are label, area, perimeter, centroid, silidity, eccentricity, convex_area,
+            circularity, orientation and bbox (bounding box)</li>
+    </ol>
+    <h3 id="function-modules">Function Modules</h3>
+    <h4 id="pgcv_io">pgcv_io</h4>
+    <p>This schema contains the image input and output functions to the filesystem. Meaning that this functions read
+        and write images into files.</p>
+    <h5 id="image_read"><code>image_read</code></h5>
+    <p>Reads an image from a file into an <code>ndarray_int4</code>.</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having a filename of a grayscale image in disk</span>
+<span class="hljs-keyword">SELECT</span> shape <span class="hljs-keyword">FROM</span> pgcv_io.image_read(<span class="hljs-string">'&lt;filename&gt;'</span>);
+</div></code></pre>
+    <h5 id="image_write"><code>image_write</code></h5>
+    <p>Writes an image from an ndarray_int4 into the specified filename (path).</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having an image in the database and the output filename</span>
+<span class="hljs-keyword">SELECT</span> pgcv_io.image_write(&lt;image&gt;, <span class="hljs-string">'&lt;filename&gt;'</span>);
+</div></code></pre>
+    <hr>
+    <h4 id="pgcv_filter">pgcv_filter</h4>
+    <p>This schema contains the image filtering functions. One example of this functions is the <code>median_blur</code>
+        which replaces each pixel by the median of a local window array given by a kernel size.</p>
+    <h5 id="blur_median"><code>blur_median</code></h5>
+    <p>Perform a median filter on an N-dimensional array.</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having an image in the database and</span>
+<span class="hljs-comment">-- an odd kernel size (kernel size defaults to 5 if not specified)</span>
+<span class="hljs-keyword">SELECT</span> pgcv_filter.median_blur(&lt;image&gt;, [&lt;kernel <span class="hljs-keyword">size</span>&gt;]);
+</div></code></pre>
+    <h5 id="threshold_otsu"><code>threshold_otsu</code></h5>
+    <p>Calculates a threshold value based on Otsu's method.</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having an image in the database</span>
+<span class="hljs-keyword">SELECT</span> pgcv_filter.threshold_otsu(&lt;image&gt;);
+</div></code></pre>
+    <h5 id="enhancement_otsu"><code>enhancement_otsu</code></h5>
+    <p>Enhances an image using the Otsu's threshold. Used for mammogram analysis.</p>
+    <p>This function uses a method designed by Johnny Villalobos that has proven to be quite effective for mammogram
+        segmentation. It is described follows:</p>
+    <p>Let <span class="katex"><span class="katex-mathml"><math>
+                    <semantics>
+                        <mrow>
+                            <mi>t</mi>
+                        </mrow>
+                        <annotation encoding="application/x-tex">t</annotation>
+                    </semantics>
+                </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span
+                        class="mord mathit">t</span></span></span></span> be the <em>threshold</em> of an image
+        calculated through the Otsu's method, <span class="katex"><span class="katex-mathml"><math>
+                    <semantics>
+                        <mrow>
+                            <mi>m</mi>
+                            <mi>a</mi>
+                            <mi>x</mi>
+                        </mrow>
+                        <annotation encoding="application/x-tex">max</annotation>
+                    </semantics>
+                </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span
+                        class="mord mathit">m</span><span class="mord mathit">a</span><span class="mord mathit">x</span></span></span></span>
+        the maximum grayscale value of the image and <span class="katex"><span class="katex-mathml"><math>
+                    <semantics>
+                        <mrow>
+                            <mi>f</mi>
+                        </mrow>
+                        <annotation encoding="application/x-tex">f</annotation>
+                    </semantics>
+                </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span
+                        class="mord mathit" style="margin-right:0.10764em;">f</span></span></span></span> the
+        enhancement factor so that</p>
+    <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math>
+                        <semantics>
+                            <mrow>
+                                <mi>f</mi>
+                                <mo>=</mo>
+                                <mfrac>
+                                    <mi>t</mi>
+                                    <mrow>
+                                        <mn>255</mn>
+                                        <mo>−</mo>
+                                        <mi>t</mi>
+                                    </mrow>
+                                </mfrac>
+                            </mrow>
+                            <annotation encoding="application/x-tex">f = \frac{t}{255 - t}
+                            </annotation>
+                        </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                            style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathit"
+                            style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span
+                            class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span
+                        class="base"><span class="strut" style="height:2.06141em;vertical-align:-0.7693300000000001em;"></span><span
+                            class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span
+                                        class="vlist-r"><span class="vlist" style="height:1.29208em;"><span style="top:-2.314em;"><span
+                                                    class="pstrut" style="height:3em;"></span><span class="mord"><span
+                                                        class="mord">2</span><span class="mord">5</span><span class="mord">5</span><span
+                                                        class="mspace" style="margin-right:0.2222222222222222em;"></span><span
+                                                        class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span
+                                                        class="mord mathit">t</span></span></span><span style="top:-3.23em;"><span
+                                                    class="pstrut" style="height:3em;"></span><span class="frac-line"
+                                                    style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span
+                                                    class="pstrut" style="height:3em;"></span><span class="mord"><span
+                                                        class="mord mathit">t</span></span></span></span><span class="vlist-s">​</span></span><span
+                                        class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span
+                                class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+    <p>the value of each enhanced pixel <span class="katex"><span class="katex-mathml"><math>
+                    <semantics>
+                        <mrow>
+                            <msup>
+                                <mi>p</mi>
+                                <mo mathvariant="normal">′</mo>
+                            </msup>
+                        </mrow>
+                        <annotation encoding="application/x-tex">p&#x27;</annotation>
+                    </semantics>
+                </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.946332em;vertical-align:-0.19444em;"></span><span
+                        class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t"><span
+                                    class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span
+                                                class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span
+                                                    class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span>
+        corresponds to</p>
+    <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math>
+                        <semantics>
+                            <mrow>
+                                <msup>
+                                    <mi>p</mi>
+                                    <mo mathvariant="normal">′</mo>
+                                </msup>
+                                <mo>=</mo>
+                                <mo>(</mo>
+                                <mn>1</mn>
+                                <mo>−</mo>
+                                <mi>f</mi>
+                                <mo>)</mo>
+                                <mo>(</mo>
+                                <mi>m</mi>
+                                <mi>a</mi>
+                                <mi>x</mi>
+                                <mo>−</mo>
+                                <mi>p</mi>
+                                <mo>(</mo>
+                                <mn>1</mn>
+                                <mo>+</mo>
+                                <mi>f</mi>
+                                <mo>)</mo>
+                                <mo>)</mo>
+                            </mrow>
+                            <annotation encoding="application/x-tex">p&#x27; = (1 - f) (max - p (1 + f))
+                            </annotation>
+                        </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                            style="height:0.996332em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathit">p</span><span
+                                class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span
+                                                style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span
+                                                    class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span
+                                                            class="mord mtight">′</span></span></span></span></span></span></span></span></span><span
+                            class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span
+                            class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span
+                            class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span
+                            class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span
+                            class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span
+                        class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathit"
+                            style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mopen">(</span><span
+                            class="mord mathit">m</span><span class="mord mathit">a</span><span class="mord mathit">x</span><span
+                            class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span
+                            class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span
+                            class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathit">p</span><span
+                            class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span
+                            class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span
+                        class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathit"
+                            style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having an image in the database</span>
+<span class="hljs-keyword">SELECT</span> pgcv_filter.enhancement_otsu(&lt;image&gt;);
+</div></code></pre>
+    <h5 id="binarize"><code>binarize</code></h5>
+    <p>Binarizes an image according to the supplied threshold.</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having an image in the database and a threshold value</span>
+<span class="hljs-keyword">SELECT</span> pgcv_filter.binarize(&lt;image&gt;, &lt;threshold&gt;);
+</div></code></pre>
+    <hr>
+    <h4 id="pgcv_histogram">pgcv_histogram</h4>
+    <p>This schema contains the histogram computing functions. There are two main kinds of histograms in pgcv, both
+        return an histogram and a set of bin features (either the center of the bins or the edges)</p>
+    <h5 id="hist_bin_edges"><code>hist_bin_edges</code></h5>
+    <p>Compute the histogram of a set of data and the bin edges</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having an image in the database,</span>
+<span class="hljs-comment">-- the number of bins (bins defaults to 10 if not specified)</span>
+<span class="hljs-comment">-- and whether the histogram has to be normalized or not</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> pgcv_histogram.hist_bin_edges(&lt;image&gt;, [&lt;bins&gt;, [&lt;as_float&gt;]]);
+</div></code></pre>
+    <h5 id="hist_bin_centers"><code>hist_bin_centers</code></h5>
+    <p>Compute the normalized histogram of a set of data and the bin centers</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having an image in the database</span>
+<span class="hljs-comment">-- and the number of bins (bins defaults to 10 if not specified)</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> pgcv_histogram.hist_bin_centers(&lt;image&gt;, [&lt;bins&gt;]);
+</div></code></pre>
+    <hr>
+    <h4 id="pgcv_measure">pgcv_measure</h4>
+    <p>This schema contains the functions that perform measure computations on the image. In particular, <code>pgcv_measure</code>
+        includes de region properties functions, which find objects on a binarize image</p>
+    <h5 id="region_props_json"><code>region_props_json</code></h5>
+    <p>Returns a json array with the region properties of a binary image</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having a binarized image in the database</span>
+<span class="hljs-keyword">SELECT</span> pgcv_measure.region_props_json(&lt;image&gt;);
+</div></code></pre>
+    <h5 id="region_props"><code>region_props</code></h5>
+    <p>Returns a set of region properties found in a binary image</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having a binarized image in the database</span>
+<span class="hljs-comment">-- this allows for the inclusion of WHERE conditions</span>
+<span class="hljs-comment">-- for filter the properties</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> pgcv_measure.region_props(&lt;image&gt;);
+</div></code></pre>
+    <hr>
+    <h4 id="pgcv_bundle">pgcv_bundle</h4>
+    <p>The bundle schema provides access to common successive operations performed to an image. The purpose of this
+        schema is to reduce the overhead produced by the comunication from the PostgreSQL server and Python.</p>
+    <h5 id="mam_region_props"><code>mam_region_props</code></h5>
+    <p>Returns a set of region properties found in a mammogram image</p>
+    <pre class="hljs"><code><div><span class="hljs-comment">-- having an image in the database</span>
+<span class="hljs-comment">-- and odd kernel size (kernel size defaults to 5 if not specified)</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> pgcv_bundle.mam_region_props(&lt;image&gt;, [&lt;kernel <span class="hljs-keyword">size</span>&gt;]);
+</div></code></pre>
+    <h2 id="example">Example</h2>
+    <p>The following example shows the sequence of SQL commands needed to perform a mammogram segmentation using the
+        <code>pgcv</code>. The image used for this example is an mammogram taken from the MIAS MiniMammographic
+        Database:</p>
+    <div style="text-align:center"><img src="./mdb155_original.png" /></div>
+    <p>This example is divided into two steps: the image segmentation using the Otsu enhancement and the object
+        extraction using the region properties</p>
+    <h3 id="image-segmentation">Image Segmentation</h3>
+    <p>The following steps show the needed steps to perform the segmentation</p>
+    <ul>
+        <li>Read the image from the file system</li>
+        <li>Perform a median_blur</li>
+        <li>Compute the Otsu threshold of the image</li>
+        <li>Enhance the image</li>
+        <li>Binarize the image using the threshold</li>
+    </ul>
+    <pre class="hljs"><code><div><span class="hljs-keyword">DO</span> $_$
+<span class="hljs-keyword">DECLARE</span>
+  image pgcv_core.ndarray_int4;
+  result pgcv_core.ndarray_int4;
+  thresh float;
+<span class="hljs-keyword">BEGIN</span>
+  image :=  (<span class="hljs-keyword">SELECT</span> pgcv_filter.blur_median(
+                      pgcv_io.image_read(<span class="hljs-string">'/path/to/original/image.png'</span>), <span class="hljs-number">5</span>
+                    ));
+  thresh := (<span class="hljs-keyword">SELECT</span> pgcv_filter.threshold_otsu(image));
+  result := (<span class="hljs-keyword">SELECT</span> pgcv_filter.binarize(pgcv_filter.enhancement_otsu(image), thresh));
+  PERFORM pgcv_io.image_write(result, '/path/to/binarized/image.png');
+<span class="hljs-keyword">END</span>
+$_$
+</div></code></pre>
+    <p>The result of this process is the following image:</p>
+    <div style="text-align:center"><img src="./mdb155_binarized.png" /></div>
+    <h3 id="object-extraction">Object Extraction</h3>
+    <p>The object extraction consists of a single SQL query that computes the region properties and allows to filter
+        them through a WHERE clause</p>
+    <pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+  label, area, perimeter, centroid, circularity
+<span class="hljs-keyword">FROM</span> pgcv_measure.region_props(pgcv_io.image_read(<span class="hljs-string">'/Users/ro/Desktop/prueba.png'</span>)) <span class="hljs-keyword">WHERE</span> area &gt; <span class="hljs-number">15</span> <span class="hljs-keyword">AND</span> area &lt; <span class="hljs-number">55</span>;
+<span class="hljs-comment">-- you could also include solidity, eccentricity, convex_area, orientation and bbox in the query</span>
+</div></code></pre>
+    <p>The result of this query is the following table of region properties</p>
+    <table>
+        <thead>
+            <tr>
+                <th>label</th>
+                <th>area</th>
+                <th>perimeter</th>
+                <th>centroid</th>
+                <th>circularity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>4</td>
+                <td>20</td>
+                <td>15.071067811865474</td>
+                <td>{299.75000000000000000,832.80000000000000000}</td>
+                <td>1.1065010026804611</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>19</td>
+                <td>14.242640687119286</td>
+                <td>{420.26315789473680000,427.31578947368420000}</td>
+                <td>1.1770161688565013</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>36</td>
+                <td>20.727922061357855</td>
+                <td>{473.47222222222223000,481.33333333333330000}</td>
+                <td>1.0529332270693823</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>16</td>
+                <td>13.242640687119284</td>
+                <td>{490.68750000000000000,461.25000000000000000}</td>
+                <td>1.1465174146811834</td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>17</td>
+                <td>13.071067811865474</td>
+                <td>{544.00000000000000000,580.88235294117650000}</td>
+                <td>1.250364543402942</td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td>48</td>
+                <td>26.485281374238568</td>
+                <td>{577.29166666666660000,400.58333333333330000}</td>
+                <td>0.8598880610108875</td>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td>27</td>
+                <td>17.65685424949238</td>
+                <td>{578.70370370370370000,379.37037037037040000}</td>
+                <td>1.0882958272169045</td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td>30</td>
+                <td>22.727922061357855</td>
+                <td>{637.46666666666670000,391.53333333333336000}</td>
+                <td>0.7298131021442217</td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td>30</td>
+                <td>20.14213562373095</td>
+                <td>{661.76666666666670000,467.10000000000000000}</td>
+                <td>0.929223291202501</td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td>34</td>
+                <td>26.106601717798213</td>
+                <td>{670.52941176470590000,451.55882352941177000}</td>
+                <td>0.6268853111775277</td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td>24</td>
+                <td>19.692388155425117</td>
+                <td>{676.58333333333340000,464.00000000000000000}</td>
+                <td>0.7777219038741342</td>
+            </tr>
+            <tr>
+                <td>41</td>
+                <td>26</td>
+                <td>19.44974746830583</td>
+                <td>{687.46153846153850000,449.30769230769230000}</td>
+                <td>0.8636848033284439</td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td>17</td>
+                <td>13.071067811865476</td>
+                <td>{687.00000000000000000,492.52941176470586000}</td>
+                <td>1.2503645434029418</td>
+            </tr>
+            <tr>
+                <td>46</td>
+                <td>17</td>
+                <td>13.071067811865476</td>
+                <td>{722.23529411764710000,590.00000000000000000}</td>
+                <td>1.2503645434029418</td>
+            </tr>
+            <tr>
+                <td>55</td>
+                <td>23</td>
+                <td>15.65685424949238</td>
+                <td>{734.34782608695650000,462.91304347826090000}</td>
+                <td>1.1790403893488048</td>
+            </tr>
+            <tr>
+                <td>62</td>
+                <td>20</td>
+                <td>15.071067811865474</td>
+                <td>{750.40000000000000000,426.75000000000000000}</td>
+                <td>1.1065010026804611</td>
+            </tr>
+            <tr>
+                <td>64</td>
+                <td>32</td>
+                <td>20.520815280171306</td>
+                <td>{758.00000000000000000,461.71875000000000000}</td>
+                <td>0.9549279835285656</td>
+            </tr>
+            <tr>
+                <td>65</td>
+                <td>50</td>
+                <td>32.935028842544405</td>
+                <td>{768.68000000000000000,506.98000000000000000}</td>
+                <td>0.5792469719204167</td>
+            </tr>
+            <tr>
+                <td>67</td>
+                <td>25</td>
+                <td>17.071067811865476</td>
+                <td>{768.28000000000000000,537.20000000000000000}</td>
+                <td>1.0780241689052945</td>
+            </tr>
+            <tr>
+                <td>69</td>
+                <td>18</td>
+                <td>13.071067811865476</td>
+                <td>{773.83333333333340000,366.72222222222223000}</td>
+                <td>1.3239153988972323</td>
+            </tr>
+            <tr>
+                <td>70</td>
+                <td>51</td>
+                <td>25.556349186104047</td>
+                <td>{785.56862745098040000,284.41176470588240000}</td>
+                <td>0.98125619872571</td>
+            </tr>
+            <tr>
+                <td>98</td>
+                <td>26</td>
+                <td>18.485281374238568</td>
+                <td>{868.50000000000000000,457.76923076923080000}</td>
+                <td>0.9561611214257792</td>
+            </tr>
+            <tr>
+                <td>99</td>
+                <td>23</td>
+                <td>16.485281374238568</td>
+                <td>{872.34782608695650000,422.21739130434780000}</td>
+                <td>1.0635183109500363</td>
+            </tr>
+            <tr>
+                <td>108</td>
+                <td>30</td>
+                <td>25.727922061357855</td>
+                <td>{942.16666666666660000,428.43333333333334000}</td>
+                <td>0.5695366755033309</td>
+            </tr>
+            <tr>
+                <td>112</td>
+                <td>35</td>
+                <td>23.556349186104047</td>
+                <td>{975.22857142857140000,635.28571428571430000}</td>
+                <td>0.7926143695103078</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2 id="appendix-a---source-code">Appendix A - Source Code</h2>
+    <h3 id="pgcv_core-source-code">pgcv_core source code</h3>
+    <pre class="hljs"><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>  pgcv_core <span class="hljs-keyword">CASCADE</span>;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SCHEMA</span> pgcv_core;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: N-dimentional array of int4 elements</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TYPE</span> pgcv_core.ndarray_int4 <span class="hljs-keyword">AS</span> (
+  shape   <span class="hljs-built_in">int</span>[],
+  <span class="hljs-keyword">data</span>    <span class="hljs-built_in">int</span>[]
+);
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">TYPE</span> pgcv_core.ndarray_int4 <span class="hljs-keyword">IS</span> <span class="hljs-string">'N-dimensional array of int4 elements. Used to represent and store images.'</span>;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Region properties of an object found in a binary image</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TYPE</span> pgcv_core.regionprops <span class="hljs-keyword">AS</span> (
+  label         <span class="hljs-built_in">int</span>,
+  area          <span class="hljs-built_in">int</span>,
+  perimeter     <span class="hljs-built_in">float</span>,
+  centroid      <span class="hljs-built_in">float</span>[<span class="hljs-number">2</span>],
+  solidity      <span class="hljs-built_in">float</span>,
+  eccentricity  <span class="hljs-built_in">float</span>,
+  convex_area   <span class="hljs-built_in">int</span>,
+  circularity   <span class="hljs-built_in">float</span>,
+  orientation   <span class="hljs-built_in">float</span>,
+  bbox          <span class="hljs-built_in">int</span>[<span class="hljs-number">4</span>]
+);
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">TYPE</span> pgcv_core.regionprops <span class="hljs-keyword">IS</span> <span class="hljs-string">'Region properties of an object found in a binary image.'</span>;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Calculates the average hash of an image</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_core.hash_avg(image pgcv_core.ndarray_int4, <span class="hljs-keyword">size</span> <span class="hljs-built_in">int</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">8</span>)
+  <span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">varchar</span>
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Calculates the average hash of an image.
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+size : int, optional
+    Size of the hash. This size is used to resize the supplied image using 'lanczos' interpolation.
+Returns
+-------
+hash : str
+    The average hash in base 16.
+Examples
+--------
+&gt;&gt;&gt; SELECT pgcv_core.hash_avg(pgcv_io.image_read('/path/to/image.png'));
+Notes
+-----
+The input image must be grayscale.
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> misc
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+pixels = misc.imresize(img, (<span class="hljs-keyword">size</span>, <span class="hljs-keyword">size</span>), <span class="hljs-string">'lanczos'</span>)
+<span class="hljs-keyword">avg</span> = pixels.mean()
+diff = pixels &gt; <span class="hljs-keyword">avg</span>
+
+h = <span class="hljs-number">0</span>
+s = []
+<span class="hljs-keyword">for</span> i,v <span class="hljs-keyword">in</span> enumerate(diff.flatten()):
+  <span class="hljs-keyword">if</span> v: h += <span class="hljs-number">2</span>**(i % <span class="hljs-number">8</span>)
+  <span class="hljs-keyword">if</span> (i % <span class="hljs-number">8</span>) == <span class="hljs-number">7</span>:
+    s.append(<span class="hljs-keyword">hex</span>(h)[<span class="hljs-number">2</span>:].rjust(<span class="hljs-number">2</span>, <span class="hljs-string">'0'</span>))
+    h = <span class="hljs-number">0</span>
+<span class="hljs-keyword">return</span> <span class="hljs-string">""</span>.join(s)
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_core.hash_avg(pgcv_core.ndarray_int4, <span class="hljs-built_in">int</span>) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Calculates the average hash of an image.'</span>;
+</div></code></pre>
+    <h3 id="pgcv_io-source-code">pgcv_io source code</h3>
+    <pre class="hljs"><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>  pgcv_io <span class="hljs-keyword">CASCADE</span>;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SCHEMA</span> pgcv_io;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Reads an image from a file into an ndarray_int4</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_io.image_read(filename <span class="hljs-built_in">varchar</span>)
+  <span class="hljs-keyword">RETURNS</span> pgcv_core.ndarray_int4
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Reads an image from a file into an ndarray_int4
+
+Parameters
+----------
+filename : str
+    Filename of the image (path).
+Returns
+-------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+Examples
+--------
+&gt;&gt;&gt; SELECT shape FROM pgcv_io.image_read('/path/to/image.png');
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image
+
+img = Image.open(filename)
+img = np.array(img)
+
+<span class="hljs-keyword">return</span> (<span class="hljs-keyword">list</span>(img.shape), np.ravel(img))
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_io.image_read(<span class="hljs-built_in">varchar</span>) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Reads an image from a file into an ndarray_int4.'</span>;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Writes an image from an ndarray_int4 into the specified filename (path)</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_io.image_write(image pgcv_core.ndarray_int4, filename <span class="hljs-built_in">varchar</span>)
+  <span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">boolean</span>
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Writes an image from an ndarray_int4 into the specified filename (path)
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+filename : str
+    Filename of the image (path)
+Returns
+-------
+success : bool
+    True if the image was saved successfully
+Examples
+--------
+&gt;&gt;&gt; DO $_$
+&gt;&gt;&gt; DECLARE arr pgcv_core.ndarray_int4;
+&gt;&gt;&gt; BEGIN
+&gt;&gt;&gt; SELECT shape, data FROM pgcv_io.image_read('/path/to/in_image.png') INTO arr;
+&gt;&gt;&gt; PERFORM pgcv_io.image_write(arr, '/path/to/out_image.png');
+&gt;&gt;&gt; END
+&gt;&gt;&gt; $_$
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+img = Image.fromarray(img)
+img.save(filename)
+
+<span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_io.image_write(pgcv_core.ndarray_int4, <span class="hljs-built_in">varchar</span>) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Writes an image from an ndarray_int4 into the specified filename (path).'</span>;
+</div></code></pre>
+    <h3 id="pgcv_filter-source-code">pgcv_filter source code</h3>
+    <pre class="hljs"><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>  pgcv_filter <span class="hljs-keyword">CASCADE</span>;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SCHEMA</span> pgcv_filter;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Perform a median filter on an N-dimensional array.</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_filter.blur_median(image pgcv_core.ndarray_int4, kernel <span class="hljs-built_in">int</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">5</span>)
+  <span class="hljs-keyword">RETURNS</span> pgcv_core.ndarray_int4
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Perform a median filter on an N-dimensional array.
+
+Apply a median filter to the input array using a local window-size given by kernel.
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+kernel : int, optional
+    Local window-size giving the size of the median filter. Defaults to 5
+Returns
+-------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+Examples
+--------
+&gt;&gt;&gt; DO $_$
+&gt;&gt;&gt; DECLARE
+&gt;&gt;&gt;   arr pgcv_core.ndarray_int4;
+&gt;&gt;&gt;   arr2 pgcv_core.ndarray_int4;
+&gt;&gt;&gt; BEGIN
+&gt;&gt;&gt; SELECT shape, data FROM pgcv_io.image_read('/path/to/image.png') INTO arr;
+&gt;&gt;&gt; SELECT shape, data FROM pgcv_filter.blur_median(arr, 4) INTO arr2;
+&gt;&gt;&gt; PERFORM pgcv_io.image_write(arr, '/path/to/unmodified_image.png');
+&gt;&gt;&gt; PERFORM pgcv_io.image_write(arr2, '/path/to/modified_image.png');
+&gt;&gt;&gt; END
+&gt;&gt;&gt; $_$
+Notes
+-----
+Kernel size must be odd
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> signal
+
+<span class="hljs-keyword">global</span> kernel
+
+<span class="hljs-keyword">if</span> kernel % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:
+  plpy.notice(<span class="hljs-string">'Invalid kernel size "{}". Kernel must be odd. Default size 5 will be used instead'</span>.format(kernel))
+  kernel = <span class="hljs-number">5</span>
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+med = signal.medfilt(img, kernel).astype(<span class="hljs-string">'uint8'</span>)
+
+<span class="hljs-keyword">return</span> (<span class="hljs-keyword">list</span>(med.shape), np.ravel(med))
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_filter.blur_median(pgcv_core.ndarray_int4, <span class="hljs-built_in">int</span>) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Perform a median filter on an N-dimensional array.'</span>;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Calculates a threshold value based on Otsu's method.</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_filter.threshold_otsu(image pgcv_core.ndarray_int4)
+  <span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">float</span>
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Calculates a threshold value based on Otsu's method.
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+Returns
+-------
+thresh : float
+    A float that is the Otsu's threshold.
+Examples
+--------
+&gt;&gt;&gt; SELECT pgcv_filter.threshold_otsu(pgcv_io.image_read('/path/to/image.png'));
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> filters
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+thresh = filters.threshold_otsu(img)
+
+<span class="hljs-keyword">return</span> thresh
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_filter.threshold_otsu(pgcv_core.ndarray_int4) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Calculates a threshold value based on Otsu''s method.'</span>;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Enhances an image using the otsu threshold. Used for mammogram analysis</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_filter.enhancement_otsu(image pgcv_core.ndarray_int4)
+  <span class="hljs-keyword">RETURNS</span> pgcv_core.ndarray_int4
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Enhances an image using the otsu threshold. Used for mammogram analysis.
+
+This method was designed by Johnny Villalobos and is described as:
+Let t be the threshold of an image calculated through the Otsu's method and f the enhancement factor so that f = t / (255 - t),
+the value of each enhanced pixel corresponds to:
+    p'  = (255 - p(1 + f)) - f(255 - p(1 + f))
+        = (1 - f) (255 - p(1 + f))
+
+This formula has proven to be quite effective for mammogram segmentation
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+Returns
+-------
+image : ndarray
+    Enhanced image represented by a pgcv_core.ndarray_int4.
+Examples
+--------
+&gt;&gt;&gt; SELECT shape from pgcv_filter.enhancement_otsu(pgcv_io.image_read('/path/to/image.png'));
+&gt;&gt;&gt; SELECT * from pgcv_io.image_write(
+&gt;&gt;&gt;     pgcv_filter.enhancement_otsu(
+&gt;&gt;&gt;         pgcv_filter.blur_median(
+&gt;&gt;&gt;             pgcv_io.image_read('/path/to/in_image.png'), 5
+&gt;&gt;&gt;         )
+&gt;&gt;&gt;     ), '/path/to/out_image.png');
+Notes
+-----
+The median blur should be applied previous to this enhancement
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> filters
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+thresh = filters.threshold_otsu(img)
+f = thresh / (<span class="hljs-number">255</span> - thresh)
+
+img = (<span class="hljs-number">1</span> - f) * (<span class="hljs-number">255</span> - img * (<span class="hljs-number">1</span> + f))
+
+<span class="hljs-keyword">return</span> (<span class="hljs-keyword">list</span>(img.shape), np.ravel(img).astype(<span class="hljs-string">'uint8'</span>))
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_filter.enhancement_otsu(pgcv_core.ndarray_int4) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Enhances an image using the otsu threshold. Used for mammogram analysis'</span>;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Binarizes an image according to the supplied threshold.</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_filter.binarize(image pgcv_core.ndarray_int4, thresh <span class="hljs-built_in">float</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">255</span>)
+  <span class="hljs-keyword">RETURNS</span> pgcv_core.ndarray_int4
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Binarizes an image according to the supplied threshold.
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+thresh : float
+    The threshold used to binarize the image. The resulting value is 0 if the value is less than the threshold, 255 otherwise
+Returns
+-------
+image : ndarray
+    Binarized image represented by a pgcv_core.ndarray_int4.
+Examples
+--------
+&gt;&gt;&gt; SELECT shape from pgcv_filter.binarize(pgcv_io.image_read('/path/to/image.png'), 77);
+Notes
+-----
+If used for mammogram segmentation, consider to apply the enhancement_otsu first and use the threshold_otsu as threshold
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> filters
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+img = np.where(img &lt; thresh, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>)
+
+<span class="hljs-keyword">return</span> (<span class="hljs-keyword">list</span>(img.shape), np.ravel(img).astype(<span class="hljs-string">'uint8'</span>))
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_filter.binarize(pgcv_core.ndarray_int4, <span class="hljs-built_in">float</span>) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Binarizes an image according to the supplied threshold.'</span>;
+</div></code></pre>
+    <h3 id="pgcv_histogram-source-code">pgcv_histogram source code</h3>
+    <pre class="hljs"><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span>  pgcv_histogram <span class="hljs-keyword">CASCADE</span>;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SCHEMA</span> pgcv_histogram;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Compute the histogram of a set of data and the bin edges</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_histogram.hist_bin_edges(image pgcv_core.ndarray_int4, bins <span class="hljs-built_in">int</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">10</span>, as_float <span class="hljs-built_in">boolean</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">TRUE</span>,
+  <span class="hljs-keyword">OUT</span> hist <span class="hljs-built_in">numeric</span>[], <span class="hljs-keyword">OUT</span> bin_edges <span class="hljs-built_in">numeric</span>[])
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Compute the histogram of a set of data and the bin edges
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+bins : int, optional
+    Number of bins in the histogram. Defaults to 10
+as_float : bool, optional
+    Indicates if the image should be converted as float for the histogram computation. Defaults to TRUE
+Returns
+-------
+hist : array
+    The histogram represented by an numeric array.
+bin_edges : array
+    The bin_edges represented by a numeric array.
+Examples
+--------
+&gt;&gt;&gt; SELECT * FROM pgcv_histogram.hist_bin_edges(pgcv_io.image_read('/path/to/image.png'));
+&gt;&gt;&gt; SELECT * FROM pgcv_histogram.hist_bin_edges(pgcv_io.image_read('/path/to/image.png'), 5, FALSE);
+&gt;&gt;&gt; SELECT * FROM pgcv_histogram.hist_bin_edges(pgcv_io.image_read('/path/to/image.png'), 5);
+Notes
+-----
+The bin_edges array is of length (length(hist) + 1)
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> img_as_float
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+<span class="hljs-keyword">if</span> (as_float == <span class="hljs-literal">True</span>):
+  img = img_as_float(img)
+hist, bin_edges = np.histogram(img, bins)
+
+<span class="hljs-keyword">return</span> (hist, bin_edges)
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_histogram.hist_bin_edges(pgcv_core.ndarray_int4, <span class="hljs-built_in">int</span>, <span class="hljs-built_in">boolean</span>, <span class="hljs-keyword">OUT</span> <span class="hljs-built_in">int</span>[], <span class="hljs-keyword">OUT</span> <span class="hljs-built_in">numeric</span>[]) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Compute the histogram of a set of data and the bin edges. The user can choose to convert the image to float'</span>;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Compute the normalized histogram of a set of data and the bin centers</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_histogram.hist_bin_centers(image pgcv_core.ndarray_int4, bins <span class="hljs-built_in">int</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">10</span>,
+  <span class="hljs-keyword">OUT</span> hist <span class="hljs-built_in">numeric</span>[], <span class="hljs-keyword">OUT</span> bin_centers <span class="hljs-built_in">numeric</span>[])
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Compute the normalized histogram of a set of data and the bin centers
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+bins : int, optional
+    Number of bins in the histogram. Defaults to 10
+Returns
+-------
+hist : array
+    The normalized histogram represented by an numeric array.
+bin_centers : array
+    The bin_centers represented by a numeric array.
+Examples
+--------
+&gt;&gt;&gt; SELECT * FROM pgcv_histogram.hist_bin_centers(pgcv_io.image_read('/path/to/image.png'), 5);
+&gt;&gt;&gt; SELECT * FROM pgcv_histogram.hist_bin_centers(pgcv_io.image_read('/path/to/image.png'));
+Notes
+-----
+The bin_centers array is of length length(hist)
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> exposure, img_as_float
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+img = img_as_float(img)
+hist, bin_centers = exposure.histogram(img, bins)
+
+<span class="hljs-keyword">return</span> (hist, bin_centers)
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_histogram.hist_bin_centers(pgcv_core.ndarray_int4, <span class="hljs-built_in">int</span>, <span class="hljs-keyword">OUT</span> <span class="hljs-built_in">int</span>[], <span class="hljs-keyword">OUT</span> <span class="hljs-built_in">numeric</span>[]) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Compute the normalized histogram of a set of data and the bin centers.'</span>;
+</div></code></pre>
+    <h3 id="pgcv_measure-source-code">pgcv_measure source code</h3>
+    <pre class="hljs"><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> pgcv_measure <span class="hljs-keyword">CASCADE</span>;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SCHEMA</span> pgcv_measure;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Returns a json array with the region properties found in a binary image</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_measure.region_props_json(image pgcv_core.ndarray_int4)
+  <span class="hljs-keyword">RETURNS</span> jsonb
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Returns a json array with the region properties of a binary image
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+Returns
+-------
+regionprops : jsonb
+    The json array with the region properties, corresponding to label, area, perimeter,
+    centroid, solidity, eccentricity, convex_area, circularity, orientation and bbox.
+Examples
+--------
+&gt;&gt;&gt; SELECT pgcv_measure.region_props_json(pgcv_io.image_read('/path/to/binarized/image.png'));
+Notes
+-----
+The input image must be binarized
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> measure
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">json</span>
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+
+lbl = measure.label(img)
+regions = measure.regionprops(lbl, coordinates=<span class="hljs-string">'rc'</span>)
+
+<span class="hljs-keyword">columns</span> = [(<span class="hljs-string">'label'</span>, <span class="hljs-built_in">int</span>),
+           (<span class="hljs-string">'area'</span>, <span class="hljs-built_in">int</span>),
+           (<span class="hljs-string">'perimeter'</span>, <span class="hljs-built_in">float</span>),
+           (<span class="hljs-string">'centroid'</span>, <span class="hljs-keyword">object</span>),
+           (<span class="hljs-string">'solidity'</span>, <span class="hljs-built_in">float</span>),
+           (<span class="hljs-string">'eccentricity'</span>, <span class="hljs-built_in">float</span>),
+           (<span class="hljs-string">'convex_area'</span>, <span class="hljs-built_in">int</span>),
+           (<span class="hljs-string">'circularity'</span>, <span class="hljs-built_in">float</span>),
+           (<span class="hljs-string">'orientation'</span>, <span class="hljs-built_in">float</span>),
+           (<span class="hljs-string">'bbox'</span>, <span class="hljs-keyword">object</span>)]
+df = pd.DataFrame({k: pd.Series(dtype=t) <span class="hljs-keyword">for</span> k, t <span class="hljs-keyword">in</span> <span class="hljs-keyword">columns</span>})
+
+<span class="hljs-keyword">for</span> i, reg <span class="hljs-keyword">in</span> enumerate(regions):
+    df.loc[i] = [
+        reg.label,
+        reg.area,
+        reg.perimeter,
+        reg.centroid,
+        reg.solidity,
+        reg.eccentricity,
+        reg.convex_area,
+        <span class="hljs-number">4</span> * np.pi * reg.area / reg.perimeter ** <span class="hljs-number">2</span> <span class="hljs-keyword">if</span> reg.perimeter != <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> np.inf,  # circularity
+        reg.orientation,
+        reg.bbox
+    ]
+
+<span class="hljs-keyword">result</span> = df.to_json(orient=<span class="hljs-string">'records'</span>, double_precision=<span class="hljs-number">4</span>)
+
+<span class="hljs-keyword">return</span> (<span class="hljs-keyword">result</span>)
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_measure.region_props_json(pgcv_core.ndarray_int4) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Returns a json array with the region properties found in a binary image.'</span>;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Returns a set of region properties found in a binary image</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_measure.region_props(image pgcv_core.ndarray_int4)
+  <span class="hljs-keyword">RETURNS</span> SETOF pgcv_core.regionprops
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Returns a set of region properties found in a binary image
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+Returns
+-------
+regionprops : setof regionprops
+    The set with the region properties, corresponding to label, area, perimeter,
+    centroid, solidity, eccentricity, convex_area, circularity, orientation and bbox.
+Examples
+--------
+&gt;&gt;&gt; SELECT * FROM pgcv_measure.region_props(pgcv_io.image_read('/Users/ro/Desktop/prueba.png'))
+&gt;&gt;&gt;   WHERE area &gt; 15 AND area &lt; 55;
+Notes
+-----
+The input image must be binarized
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> measure
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+
+lbl = measure.label(img)
+regions = measure.regionprops(lbl, coordinates=<span class="hljs-string">'rc'</span>)
+
+<span class="hljs-keyword">for</span> i, reg <span class="hljs-keyword">in</span> enumerate(regions):
+    yield (
+        reg.label,
+        reg.area,
+        reg.perimeter,
+        reg.centroid,
+        reg.solidity,
+        reg.eccentricity,
+        reg.convex_area,
+        <span class="hljs-number">4</span> * np.pi * reg.area / reg.perimeter ** <span class="hljs-number">2</span> <span class="hljs-keyword">if</span> reg.perimeter != <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> np.inf,  # circularity
+        reg.orientation,
+        reg.bbox
+    )
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_measure.region_props(pgcv_core.ndarray_int4) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Returns a set of region properties found in a binary image.'</span>;
+</div></code></pre>
+    <h3 id="pgcv_bundle-source-code">pgcv_bundle source code</h3>
+    <pre class="hljs"><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> pgcv_bundle <span class="hljs-keyword">CASCADE</span>;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SCHEMA</span> pgcv_bundle;
+
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-comment">-- Author:      Roberto Mora</span>
+<span class="hljs-comment">-- Description: Returns a set of region properties found in a mammogram image</span>
+<span class="hljs-comment">-- =============================================</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> pgcv_bundle.mam_region_props(image pgcv_core.ndarray_int4, kernel <span class="hljs-built_in">int</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">5</span>)
+  <span class="hljs-keyword">RETURNS</span> SETOF pgcv_core.regionprops
+<span class="hljs-keyword">AS</span> $$
+<span class="hljs-string">"""
+Returns a set of region properties found in a mammogram image
+
+Parameters
+----------
+image : ndarray
+    The image represented by a pgcv_core.ndarray_int4.
+Returns
+-------
+regionprops : setof regionprops
+    The set with the region properties, corresponding to label, area, perimeter,
+    centroid, solidity, eccentricity, convex_area, circularity, orientation and bbox.
+Examples
+--------
+&gt;&gt;&gt; SELECT * FROM pgcv_bundle.mam_region_props(pgcv_io.image_read('/Users/ro/Desktop/prueba.png'))
+&gt;&gt;&gt;   WHERE area &gt; 15 AND area &lt; 55;
+Notes
+-----
+The input image must be unaltered.
+"""</span>
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> signal
+<span class="hljs-keyword">from</span> skimage <span class="hljs-keyword">import</span> measure, filters
+
+img = np.array(image[<span class="hljs-string">"data"</span>]).reshape(image[<span class="hljs-string">"shape"</span>]).astype(<span class="hljs-string">'uint8'</span>)
+
+<span class="hljs-string">"""
+1. Apply the mean filter
+"""</span>
+img = signal.medfilt(img, kernel).astype(<span class="hljs-string">'uint8'</span>)
+
+<span class="hljs-string">"""
+2. Enhance the image through the otsu enhancement
+"""</span>
+thresh = filters.threshold_otsu(img)
+f = thresh / (<span class="hljs-number">255</span> - thresh)
+img = ((<span class="hljs-number">1</span> - f) * (<span class="hljs-number">255</span> - img * (<span class="hljs-number">1</span> + f))).astype(<span class="hljs-string">'uint8'</span>)
+
+<span class="hljs-string">"""
+3. Binarize the image
+"""</span>
+img = np.where(img &lt; thresh, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>)
+
+<span class="hljs-string">"""
+4. Calculate the regionprops
+"""</span>
+lbl = measure.label(img)
+regions = measure.regionprops(lbl, coordinates=<span class="hljs-string">'rc'</span>)
+
+<span class="hljs-keyword">for</span> i, reg <span class="hljs-keyword">in</span> enumerate(regions):
+    yield (
+        reg.label,
+        reg.area,
+        reg.perimeter,
+        reg.centroid,
+        reg.solidity,
+        reg.eccentricity,
+        reg.convex_area,
+        <span class="hljs-number">4</span> * np.pi * reg.area / reg.perimeter ** <span class="hljs-number">2</span> <span class="hljs-keyword">if</span> reg.perimeter != <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> np.inf,  # circularity
+        reg.orientation,
+        reg.bbox
+    )
+$$ <span class="hljs-keyword">LANGUAGE</span> plpython3u <span class="hljs-keyword">STRICT</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">FUNCTION</span> pgcv_bundle.mam_region_props(pgcv_core.ndarray_int4, <span class="hljs-built_in">int</span>) <span class="hljs-keyword">IS</span> <span class="hljs-string">'Returns a set of region properties found in an unaltered image.'</span>;
+</div></code></pre>
+
+</body>
+
+</html>
