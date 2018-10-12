@@ -9,7 +9,7 @@ CREATE TYPE pgcv_core.ndarray_int4 AS (
   shape   int[],
   data    int[]
 );
-COMMENT ON TYPE pgcv_core.ndarray_int4 IS 'N-dimensional array of int4 elements. Generally used to manipulate images.';
+COMMENT ON TYPE pgcv_core.ndarray_int4 IS 'N-dimensional array of int4 elements. Used to represent and store images.';
 
 -- =============================================
 -- Author:      Roberto Mora
