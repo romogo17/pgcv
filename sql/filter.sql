@@ -172,7 +172,6 @@ If used for mammogram segmentation, consider to apply the enhancement_otsu first
 """
 
 import numpy as np
-from skimage import filters
 
 img = np.array(image["data"]).reshape(image["shape"]).astype('uint8')
 img = np.where(img < thresh, 0, 255)
@@ -198,7 +197,7 @@ COMMENT ON FUNCTION pgcv_filter.binarize(pgcv_core.ndarray_int4, float) IS 'Bina
 --   thresh float;
 -- BEGIN
 --   image :=  (SELECT pgcv_filter.blur_median(
---                       pgcv_io.image_read('/Users/ro/U/[ Asistencia ] - Proyecto de Investigacion/Source_Images/mdb155.pgm'), 5
+--                       pgcv_io.image_read('/Users/ro/Desktop/mdb147lx.pgm'), 5
 --                     ));
 --   thresh := (SELECT pgcv_filter.threshold_otsu(image));
 --   result := (SELECT pgcv_filter.binarize(pgcv_filter.enhancement_otsu(image), thresh));

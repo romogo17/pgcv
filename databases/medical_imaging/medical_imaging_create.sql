@@ -1,4 +1,5 @@
--- Last modification date: 2018-09-18 00:56:13.434
+-- Created by Vertabelo (http://vertabelo.com)
+-- Last modification date: 2018-10-19 17:31:48.014
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 DROP SCHEMA IF EXISTS med_img CASCADE;
@@ -120,6 +121,37 @@ COMMENT ON COLUMN med_img.Study.summary IS 'Stores information about the overall
 COMMENT ON COLUMN med_img.Study.created_at IS 'Date and time when the study started';
 COMMENT ON COLUMN med_img.Study.updated_at IS 'Date and time when the study was last updated';
 COMMENT ON COLUMN med_img.Study.active IS 'Defines whether the study is active';
+
+-- views
+-- View: instance_thumbnails
+CREATE MATERIALIZED VIEW med_img.instance_thumbnails AS
+SELECT
+       uuid,
+       series_uuid,
+       pgcv_core.thumbnail_uri_base64(image) AS thumbnail_uri
+FROM med_img.Instance
+WHERE active = true;
+
+COMMENT ON MATERIALIZED VIEW med_img.instance_thumbnails IS 'Materialized view of the Instance thumbnails. This view provides access to the data URIs of each Instance';
+COMMENT ON COLUMN med_img.instance_thumbnails.uuid IS 'Universally unique identifier of the instance in the database.';
+COMMENT ON COLUMN med_img.instance_thumbnails.series_uuid IS 'Reference to the uuid of the series.';
+COMMENT ON COLUMN med_img.instance_thumbnails.thumbnail_uri IS 'Data URIs of the thumbnail of each Instance';
+
+CREATE OR REPLACE FUNCTION med_img.refreshInstanceThumbnails()
+  RETURNS TRIGGER AS $_$
+BEGIN
+  REFRESH MATERIALIZED VIEW CONCURRENTLY med_img.InstanceThumbnails WITH DATA;
+END;
+$_$
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS refreshInstanceThumbnails
+ON med_img.Instance;
+
+CREATE TRIGGER refreshInstanceThumbnails
+  AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE
+  ON med_img.Instance
+EXECUTE PROCEDURE med_img.refreshInstanceThumbnails();
 
 -- foreign keys
 -- Reference: Image_Series (table: Instance)
