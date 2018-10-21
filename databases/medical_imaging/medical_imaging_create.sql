@@ -128,7 +128,8 @@ CREATE MATERIALIZED VIEW med_img.instance_thumbnails AS
 SELECT
        uuid,
        series_uuid,
-       pgcv_core.thumbnail_uri_base64(image) AS thumbnail_uri
+       pgcv_core.thumbnail_uri_base64(image) AS thumbnail_uri,
+       created_at
 FROM med_img.Instance
 WHERE active = true;
 
@@ -136,11 +137,13 @@ COMMENT ON MATERIALIZED VIEW med_img.instance_thumbnails IS 'Materialized view o
 COMMENT ON COLUMN med_img.instance_thumbnails.uuid IS 'Universally unique identifier of the instance in the database.';
 COMMENT ON COLUMN med_img.instance_thumbnails.series_uuid IS 'Reference to the uuid of the series.';
 COMMENT ON COLUMN med_img.instance_thumbnails.thumbnail_uri IS 'Data URIs of the thumbnail of each Instance';
+COMMENT ON COLUMN med_img.instance_thumbnails.created_at IS 'Datetime the Instance was created';
 
 CREATE OR REPLACE FUNCTION med_img.refreshInstanceThumbnails()
   RETURNS TRIGGER AS $_$
 BEGIN
-  REFRESH MATERIALIZED VIEW CONCURRENTLY med_img.InstanceThumbnails WITH DATA;
+  REFRESH MATERIALIZED VIEW med_img.instance_thumbnails WITH DATA;
+  RETURN NEW;
 END;
 $_$
 LANGUAGE plpgsql;
