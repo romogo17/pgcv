@@ -136,11 +136,4 @@ COMMENT ON FUNCTION pgcv_bundle.mam_segment(pgcv_core.ndarray_int4, int) IS 'Ret
 -- These queries test the bundle functions
 -- =============================================
 -- SELECT * FROM pgcv_bundle.mam_region_props(pgcv_io.image_read('/Users/ro/U/[ Asistencia ] - Proyecto de Investigacion/Source_Images/mdb155.pgm')) WHERE area > 15 AND area < 55;
-SELECT * FROM pgcv_bundle.mam_segment(pgcv_io.image_read('/Users/ro/U/[ Asistencia ] - Proyecto de Investigacion/Source_Images/mdb155.pgm'));
-
-select pgcv_bundle.mam_segment(image) from med_img.instance limit 1;
-
-select shape, data, uuid from pgcv_bundle.mam_segment((select image from med_img.instance where uuid = '0a352d08-c0f2-4175-aec5-c036af5d5eb7')), med_img.instance where uuid = '0a352d08-c0f2-4175-aec5-c036af5d5eb7';
-
-
-select uuid from med_img.instance;
+-- SELECT * FROM pgcv_bundle.mam_segment(pgcv_io.image_read('/Users/ro/U/[ Asistencia ] - Proyecto de Investigacion/Source_Images/mdb155.pgm'));
