@@ -129,7 +129,7 @@ COMMENT ON FUNCTION pgcv_measure.region_props(pgcv_core.ndarray_int4) IS 'Return
 
 
 -- =============================================
--- These queries test the filtering functions
+-- These queries test the measure functions
 -- =============================================
 -- SELECT pgcv_measure.region_props_json(pgcv_io.image_read('/Users/ro/Desktop/prueba.png'))::json->2 as props;
 --
