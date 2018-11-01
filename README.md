@@ -10,7 +10,7 @@ The extension implements both data types and functions. The data types are Postg
 
 ## Documentation
 
-You can find the documentation under the docs directory [here](./docs/documentation.md)
+You can find the documentation under the docs directory [here](./docs/documentation.MD)
 
 ## How `pgcv` came to be?
 
