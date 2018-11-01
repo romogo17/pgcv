@@ -14,13 +14,29 @@ You can find the documentation under the docs directory [here](./docs/documentat
 
 ## How `pgcv` came to be?
 
-This extension was born in the [National University Costa Rica](https://www.una.ac.cr/) as one of the main products of the project SIA0511-16 "Databases for the storage and analysis of digital mammograms" proposed by the professor MSc. Johnny Villalobos.
+This extension was born in the [National University Costa Rica](https://www.una.ac.cr/) as one of the main products of the project SIA0511-16 "Databases for the storage and analysis of digital mammograms".
 
 The extension was designed and developed by me, Roberto Mora. The first version has the purpose of creating a database for storing mammograms and information about patients using the `pgcv` data types.
 
 However, I have tried to generalize the extension for other areas of Computer Vision (hence the name) hoping I can add new functions later on, not only those used for mammogram analysis.
 
-Up until version 1.0 this extension represents my contribution to the project SIA0511-16. From there, I maintain this extension independently.
+## Requirements
+
+- PostgreSQL 10 with support for PL/Python
+- Python3
+
+## Installation
+
+The extension can be installed with the `install.py` script located in the root directory.
+
+Execute this script with Python3 and it will copy the required files to PostgreSQL shared extension directory.
+
+After that, connect to your PostgreSQL database and execute the following commands:
+
+```bash
+CREATE EXTENSION PLPYTHON3U;
+CREATE EXTENSION PGCV;
+```
 
 ## Attribution
 
